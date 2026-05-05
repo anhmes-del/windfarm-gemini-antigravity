@@ -95,20 +95,22 @@ const DetailPanel = ({ turbine, onClose }: Props) => {
           </button>
         </div>
 
+
         {/* ── Meta strip ── */}
-        <div className="grid grid-cols-4 divide-x" style={{ borderBottom: '1px solid var(--border-subtle)', divideColor: 'rgba(255,255,255,0.05)' }}>
+        <div className="grid grid-cols-4" style={{ borderBottom: '1px solid var(--border-subtle)' }}>
           {[
             { l: 'Power', v: `${turbine.ratedPower} MW` },
             { l: 'H_s', v: `${turbine.designWaveHeight.toFixed(1)} m` },
             { l: 'Piles', v: `${g.pileCount} × Ø${g.pileDiameter}m` },
             { l: 'Depth', v: `${g.waterDepth} m` },
-          ].map(i => (
-            <div key={i.l} className="p-2 text-center">
+          ].map((i, idx) => (
+            <div key={i.l} className="p-2 text-center" style={{ borderRight: idx < 3 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
               <div className="text-[8px] uppercase tracking-wider mb-0.5" style={{ color: 'rgba(255,255,255,0.3)' }}>{i.l}</div>
               <div className="text-[10px] font-mono font-bold" style={{ color: 'rgba(255,255,255,0.8)' }}>{i.v}</div>
             </div>
           ))}
         </div>
+
 
         {/* ── Tabs ── */}
         <div className="flex gap-1 p-2 border-b" style={{ borderColor: 'var(--border-subtle)' }}>

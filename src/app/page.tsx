@@ -53,8 +53,8 @@ export default function Home() {
           {/* ── Bottom KPI bar ── */}
           <div className="absolute bottom-0 left-0 right-0 z-10">
             <div
-              className="glass-morphism border-t flex items-center divide-x px-4 py-3"
-              style={{ borderColor: 'var(--border-subtle)', divideColor: 'rgba(255,255,255,0.06)' }}
+              className="glass-morphism border-t flex items-center px-4 py-3"
+              style={{ borderColor: 'var(--border-subtle)' }}
             >
               {[
                 { label: 'Total WTGs',    value: turbines.length, color: 'rgba(255,255,255,0.8)', unit: '' },
@@ -66,7 +66,7 @@ export default function Home() {
                 { label: 'Foundation',    value: 'Pile Cap',      color: 'rgba(255,255,255,0.5)', unit: '' },
                 { label: 'Status',        value: errors === 0 ? 'SYSTEM OK' : 'ACTION REQ.', color: errors === 0 ? '#34d399' : '#f87171', unit: '' },
               ].map((kpi, i) => (
-                <div key={i} className="flex-1 text-center px-3">
+                <div key={i} className="flex-1 text-center px-3" style={{ borderRight: i < 7 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
                   <div className="text-[8px] uppercase tracking-widest mb-0.5" style={{ color: 'rgba(255,255,255,0.3)' }}>{kpi.label}</div>
                   <div className="text-sm font-mono font-bold" style={{ color: kpi.color }}>
                     {kpi.value}{kpi.unit}
