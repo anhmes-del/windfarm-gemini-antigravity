@@ -1,26 +1,239 @@
 @import "tailwindcss";
 
+/* ─── CSS Custom Properties ─────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-mono), "Courier New", monospace;
+
+  /* Ocean palette */
+  --ocean-950: #020f1e;
+  --ocean-900: #041425;
+  --ocean-850: #061c34;
+  --ocean-800: #082040;
+  --ocean-700: #0d3060;
+  --ocean-600: #0e4080;
+  --ocean-500: #0e5ca3;
+  --ocean-400: #1279c8;
+  --ocean-300: #1a97e8;
+  --ocean-200: #30b8ff;
+  --ocean-100: #90d8ff;
+
+  /* Steel palette */
+  --steel-900: #111827;
+  --steel-800: #1f2937;
+  --steel-700: #374151;
+  --steel-600: #4b5563;
+  --steel-400: #9ca3af;
+  --steel-300: #d1d5db;
+
+  /* Status */
+  --status-pass: #10b981;
+  --status-warn: #f59e0b;
+  --status-fail: #ef4444;
+  --status-info: #3b82f6;
+
+  /* Primary glow color */
+  --primary: #00c3ff;
+  --primary-dim: rgba(0, 195, 255, 0.15);
+  --primary-border: rgba(0, 195, 255, 0.3);
+
+  /* Surfaces */
+  --surface-base: var(--ocean-950);
+  --surface-panel: rgba(6, 18, 36, 0.85);
+  --surface-card: rgba(8, 24, 48, 0.6);
+  --surface-hover: rgba(14, 32, 60, 0.8);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-primary: rgba(0, 195, 255, 0.2);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ─── Base Reset ─────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--ocean-950);
+    color: rgba(255, 255, 255, 0.87);
+    background-image:
+      radial-gradient(ellipse 120% 60% at 50% 0%, rgba(0, 80, 160, 0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(0, 50, 110, 0.1) 0%, transparent 60%);
+    min-height: 100vh;
+    overflow: hidden;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ─── Typography ─────────────────────────────────────────────────────────── */
+.font-mono {
+  font-family: var(--font-mono) !important;
 }
+
+/* ─── Glassmorphism ──────────────────────────────────────────────────────── */
+.glass {
+  background: var(--surface-panel);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid var(--border-subtle);
+}
+
+.glass-morphism {
+  background: var(--surface-panel);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+}
+
+.glass-card {
+  background: var(--surface-card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.75rem;
+}
+
+/* ─── Glow effects ───────────────────────────────────────────────────────── */
+.glow-border {
+  border: 1px solid var(--border-primary);
+  box-shadow: 0 0 18px rgba(0, 195, 255, 0.12), inset 0 0 18px rgba(0, 195, 255, 0.04);
+}
+
+.glow-text {
+  text-shadow: 0 0 12px rgba(0, 195, 255, 0.7), 0 0 24px rgba(0, 195, 255, 0.3);
+}
+
+.text-glow {
+  text-shadow: 0 0 10px rgba(0, 195, 255, 0.5);
+}
+
+.glow-green {
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+
+.glow-red {
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+}
+
+.glow-amber {
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+}
+
+/* ─── Status badge ───────────────────────────────────────────────────────── */
+.badge-pass  { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.35); color: #34d399; }
+.badge-warn  { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.35); color: #fbbf24; }
+.badge-fail  { background: rgba(239,68,68,0.15);  border: 1px solid rgba(239,68,68,0.35);  color: #f87171; }
+.badge-info  { background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.35); color: #60a5fa; }
+.badge-uls   { background: rgba(239,68,68,0.12);  border: 1px solid rgba(239,68,68,0.3);   color: #fca5a5; }
+.badge-sls   { background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.3);  color: #93c5fd; }
+.badge-fls   { background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.3);  color: #d8b4fe; }
+.badge-als   { background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.3);  color: #fcd34d; }
+
+/* ─── Utilization bar ────────────────────────────────────────────────────── */
+.util-bar-track {
+  height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.util-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Custom Scrollbar ───────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: rgba(2, 15, 30, 0.8); }
+::-webkit-scrollbar-thumb { background: rgba(0, 195, 255, 0.25); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 195, 255, 0.45); }
+
+/* ─── Animations ─────────────────────────────────────────────────────────── */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes wave {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scan-line {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+
+.animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
+.animate-float { animation: float-y 4s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 8s linear infinite; }
+.animate-count-up { animation: count-up 0.5s ease-out forwards; }
+.animate-fade-in { animation: fade-in 0.4s ease-out forwards; }
+.animate-scan { animation: scan-line 3s linear infinite; }
+
+/* ─── Shimmer skeleton ───────────────────────────────────────────────────── */
+.shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(0,195,255,0.07) 50%, rgba(255,255,255,0.03) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* ─── Soil layer hatch patterns ──────────────────────────────────────────── */
+.soil-clay  { background: repeating-linear-gradient(-45deg, rgba(139,90,43,0.6), rgba(139,90,43,0.6) 2px, rgba(100,60,20,0.3) 2px, rgba(100,60,20,0.3) 8px); }
+.soil-sand  { background: repeating-linear-gradient(45deg, rgba(201,170,80,0.6), rgba(201,170,80,0.6) 1px, rgba(180,150,50,0.3) 1px, rgba(180,150,50,0.3) 6px); }
+.soil-rock  { background: repeating-linear-gradient(90deg, rgba(120,120,140,0.6), rgba(120,120,140,0.6) 3px, rgba(90,90,110,0.3) 3px, rgba(90,90,110,0.3) 10px); }
+.soil-gravel { background: repeating-radial-gradient(circle at 3px 3px, rgba(160,140,100,0.5) 2px, rgba(120,100,60,0.2) 4px); }
+
+/* ─── Tabbed navigation ──────────────────────────────────────────────────── */
+.tab-btn {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.375rem;
+  color: rgba(255,255,255,0.4);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover { color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.06); }
+.tab-btn.active { color: var(--primary); background: rgba(0,195,255,0.12); border: 1px solid rgba(0,195,255,0.2); }
