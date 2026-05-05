@@ -18,11 +18,11 @@ const WaterPlane = () => {
     <mesh ref={ref} rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.3, 0]}>
       <planeGeometry args={[120, 120, 1, 1]} />
       <meshStandardMaterial
-        color="#0a3060"
+        color="#0e7aab"
         transparent
-        opacity={0.55}
-        metalness={0.9}
-        roughness={0.1}
+        opacity={0.65}
+        metalness={0.95}
+        roughness={0.05}
       />
     </mesh>
   );
@@ -32,7 +32,7 @@ const WaterPlane = () => {
 const Seabed = () => (
   <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.5, 0]}>
     <planeGeometry args={[120, 120]} />
-    <meshStandardMaterial color="#1a1208" roughness={1} metalness={0} />
+    <meshStandardMaterial color="#0c2a1a" roughness={0.95} metalness={0.05} />
   </mesh>
 );
 
@@ -184,7 +184,9 @@ interface SceneProps {
 
 const Scene = ({ onSelectTurbine, selectedTurbineId }: SceneProps) => {
   return (
-    <div className="w-full h-full" style={{ background: '#020d1a' }}>
+    <div className="w-full h-full" style={{
+      background: 'radial-gradient(ellipse at 50% 0%, #0a4a6e 0%, #06334f 40%, #041e30 100%)'
+    }}>
       <Canvas shadows dpr={[1, 2]}>
         <PerspectiveCamera makeDefault position={[18, 14, 18]} fov={45} />
         <OrbitControls
@@ -197,21 +199,24 @@ const Scene = ({ onSelectTurbine, selectedTurbineId }: SceneProps) => {
           enableDamping
         />
 
-        {/* Lighting */}
-        <ambientLight intensity={0.35} color="#b0cce8" />
+        {/* Scene background color */}
+        <color attach="background" args={['#073d5c']} />
+
+        {/* Lighting — offshore daylight */}
+        <ambientLight intensity={0.55} color="#b8ddf0" />
         <directionalLight
-          position={[20, 30, 10]}
-          intensity={1.2}
+          position={[25, 40, 15]}
+          intensity={1.6}
           castShadow
           shadow-mapSize={[2048, 2048]}
-          color="#ffe8c0"
+          color="#fff5e0"
         />
-        <pointLight position={[-10, 8, -10]} intensity={0.4} color="#00c3ff" />
-        <pointLight position={[10, 5, 10]} intensity={0.25} color="#60a5fa" />
-        <hemisphereLight args={['#0d2040', '#0a1520', 0.5]} />
+        <pointLight position={[-12, 10, -12]} intensity={0.5} color="#38bdf8" />
+        <pointLight position={[12, 6, 12]}  intensity={0.35} color="#7dd3fc" />
+        <hemisphereLight args={['#87ceeb', '#1a4f6e', 0.7]} />
 
         {/* Environment */}
-        <fog attach="fog" args={['#020d1a', 20, 80]} />
+        <fog attach="fog" args={['#0a4a6e', 28, 90]} />
 
         <WaterPlane />
         <Seabed />
@@ -225,19 +230,19 @@ const Scene = ({ onSelectTurbine, selectedTurbineId }: SceneProps) => {
           cellSize={2}
           sectionSize={8}
           sectionThickness={1.2}
-          sectionColor="#0e3060"
-          cellColor="#071828"
+          sectionColor="#0d5f80"
+          cellColor="#083348"
         />
 
-        {/* Surface grid */}
+        {/* Surface grid — subtle on water */}
         <Grid
           position={[0, -0.28, 0]}
           args={[60, 60]}
           cellSize={2}
           sectionSize={8}
           sectionThickness={0.8}
-          sectionColor="#00c3ff"
-          cellColor="#0a2040"
+          sectionColor="#29b6e8"
+          cellColor="#0d5f80"
           fadeDistance={30}
           fadeStrength={3}
         />
